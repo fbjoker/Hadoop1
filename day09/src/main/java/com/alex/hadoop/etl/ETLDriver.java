@@ -2,6 +2,7 @@ package com.alex.hadoop.etl;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
 import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
@@ -16,10 +17,14 @@ public class ETLDriver {
         Job job = Job.getInstance(new Configuration());
         job.setJarByClass(ETLDriver.class);
         job.setMapperClass(ETLMapper.class);
-        job.setNumReduceTasks(0);
+        job.setReducerClass(ETLReduce.class);
+//        job.setNumReduceTasks(0);
 
         job.setMapOutputKeyClass(Text.class);
-        job.setMapOutputValueClass(NullWritable.class);
+        job.setMapOutputValueClass(IntWritable.class);
+
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
 
         FileInputFormat.setInputPaths(job,new Path("D:\\Hadoopdata\\in"));
         FileOutputFormat.setOutputPath(job,new Path("D:\\Hadoopdata\\out") );
