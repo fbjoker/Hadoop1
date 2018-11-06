@@ -12,7 +12,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="day09" target="1.5" />
+      <module name="day09" target="7" />
       <module name="day8" target="1.5" />
       <module name="Demo1" target="1.5" />
       <module name="HadoopDemo1" target="1.5" />
