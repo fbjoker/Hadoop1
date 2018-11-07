@@ -9,6 +9,7 @@ import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 import java.io.IOException;
+import java.util.Iterator;
 
 public class IdexDriver {
     public static void main(String[] args) throws IOException, ClassNotFoundException, InterruptedException {
@@ -31,7 +32,8 @@ public class IdexDriver {
 
         System.exit(b?0:1);
 
-        if(b){
+
+
         //2
         Job job2 = Job.getInstance(configuration);
         job2.setJarByClass(IdexDriver.class);
@@ -47,6 +49,8 @@ public class IdexDriver {
         FileInputFormat.setInputPaths(job2,new Path("D:\\Hadoopdata\\tmp\\part-r-00000"));
         FileOutputFormat.setOutputPath(job2,new Path("D:\\Hadoopdata\\out"));
 
+
+        if(b){
         boolean b2 = job2.waitForCompletion(true);
 
         System.exit(b2?0:1);
