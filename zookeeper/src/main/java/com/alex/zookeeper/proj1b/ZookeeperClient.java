@@ -51,7 +51,7 @@ public class ZookeeperClient {
 
         zooKeeper = new ZooKeeper(conn, timeout, new Watcher() {
             public void process(WatchedEvent event) {
-                    //业务逻辑,循环调用
+                    //业务逻辑,循环调用 testgit
                 try {
                     isOnline();
                 } catch (KeeperException e) {
