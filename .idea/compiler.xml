@@ -9,6 +9,8 @@
         <module name="day09" />
         <module name="day8" />
         <module name="HadoopDemo1" />
+        <module name="redis" />
+        <module name="zookeeper" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -16,6 +18,10 @@
       <module name="day8" target="1.5" />
       <module name="Demo1" target="1.5" />
       <module name="HadoopDemo1" target="1.5" />
+      <module name="Hive" target="1.5" />
+      <module name="HiveProj1" target="1.5" />
+      <module name="redis" target="1.5" />
+      <module name="zookeeper" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>

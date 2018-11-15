@@ -6,6 +6,10 @@
         <option value="$PROJECT_DIR$/HadoopDemo1/pom.xml" />
         <option value="$PROJECT_DIR$/day8/pom.xml" />
         <option value="$PROJECT_DIR$/day09/pom.xml" />
+        <option value="$PROJECT_DIR$/zookeeper/pom.xml" />
+        <option value="$PROJECT_DIR$/redis/pom.xml" />
+        <option value="$PROJECT_DIR$/Hive/pom.xml" />
+        <option value="$PROJECT_DIR$/HiveProj1/pom.xml" />
       </list>
     </option>
   </component>

@@ -21,6 +21,7 @@ public class FriendsMapper  extends Mapper<Text,Text,Text,Text> {
                 context.write(k,v);
             }
 
+
         }
     }
 }

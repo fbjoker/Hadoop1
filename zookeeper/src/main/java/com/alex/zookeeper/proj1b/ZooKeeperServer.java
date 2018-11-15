@@ -23,13 +23,20 @@ public class ZooKeeperServer {
     }
 
     private static void createNode(String hostname) throws KeeperException, InterruptedException {
-        zooKeeper.create("/servers/server", hostname.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE,null);
+        zooKeeper.create("/servers/server", hostname.getBytes(), ZooDefs.Ids.OPEN_ACL_UNSAFE,CreateMode.EPHEMERAL_SEQUENTIAL);
+
 
     }
 
     private static void business(String hostname) {
 
         System.out.println( hostname +"上线了");
+
+        try {
+            Thread.sleep(Integer.MAX_VALUE);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     private static void getConnection() throws IOException {
@@ -37,7 +44,9 @@ public class ZooKeeperServer {
         zooKeeper = new ZooKeeper(conn, time, new Watcher() {
             public void process(WatchedEvent event) {
                 System.out.println(event.getType() + "-->" + event.getPath());
+
             }
+
         });
     }
 
