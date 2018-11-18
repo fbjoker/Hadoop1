@@ -1,0 +1,118 @@
+fis.seek(128*1024)  定位到流的指定位置
+
+type 1  2 >> all.tar.gz  window把一个文件的两部分合并  
+
+
+切片的判断用1.1系数,但是切还是用1.0来切
+
+combineTextinputFormat  进行小文件切片处理,  
+1.虚拟存储:先分析文件是否小于4M,小于不处理, 大于就划分为小于4M的,最后两个等分,避免不均匀,
+2.实际切片切分完成后, 安装顺序进行切片处理, 流程为如果不大于4M就一直往后加, 直到大于4M为止, 
+
+
+inputformat主要处理了
+ 1 getSplit   划分切片
+  2  createRecordReader   把文件分成kv对
+  
+  不是每行切的都重写了getSplit方法
+  
+                          getSplit                        createRecordReader
+FileInputFormat         有（按照文件切,文件大小是块大小的1.1倍就会切开）                没有
+TextInputFormat         用的是FIF的方法                 LineRecordReader
+CombineTextInputFormat  重写了                          CombineFileRecordReader
+KeyValueTextInputFormat 用的是FIF的方法                 KeyValueLineRecordReader
+NLineInputFormat        重写了                          LineRecordReader
+自定义InputFormat       用的是FIF的方法                 自定义RecordReader
+
+
+netstat -nltp  看网络端口
+
+
+shuffle  洗牌, 一个数据排序的过程,从无序到有序
+解决大数据的排序,因为内存不够,先分成小文件,排好序再合并外排
+combinner  初步的合并,减少网络IO传输,前提是不能影响业务逻辑
+
+
+设置几个reducetask 就有几个分区,具体由patition来决定去哪个TASK, 
+task设置必须要比partation大,不然会报错,没地方放
+
+shuffle在map阶段输出的文件是一个,但是分了多个区 用偏移量来区分
+seek()
+
+缓冲区里分区和排序是同时进行的, 分区实际也是排序
+
+
+&integer.max_value  保证符号位为正  
+011111
+
+shuffle 阶段的泛型都是map输出的类型
+
+partation 代码写一遍
+
+9.10步加入combiner
+
+
+reducer和combiner的区别,在求平均的时候就不一样
+
+
+三次排序的位置,原理
+
+
+
+底层HDFS
+中间mapreduce/Tez/Spark
+上层Hive/pig
+storm流模型,可以做实时计算
+
+
+// 设置切割符
+conf.set(KeyValueLineRecordReader.KEY_VALUE_SEPERATOR, " ");
+// 设置输入格式
+	job.setInputFormatClass(KeyValueTextInputFormat.class);
+//处理小文件,4M一合并
+		job.setInputFormatClass(CombineTextInputFormat.class);
+		CombineTextInputFormat.setMaxInputSplitSize(job, 4194304);
+// 7设置每个切片InputSplit中划分三条记录
+        NLineInputFormat.setNumLinesPerSplit(job, 3);       
+        // 8使用NLineInputFormat处理记录数  
+        job.setInputFormatClass(NLineInputFormat.class);  
+
+		
+// 输入输出路径需要根据自己电脑上实际的输入输出路径设置
+args = new String[] { "e:/input/inputword", "e:/output1" };
+
+
+自定义patition
+// 8 指定自定义数据分区
+		job.setPartitionerClass(ProvincePartitioner.class);
+
+		// 9 同时指定相应数量的reduce task
+		job.setNumReduceTasks(5);
+
+要想实现比较必须要实现WritableComparable,并且泛型就是自己,因为比较的类型肯定是自己
+public class FlowBean implements WritableComparable<FlowBean> {
+
+加入combiner, combinner实际就是一个reduce,写法也更reduce一样,继承reducer,重写reduce方法,注意业务逻辑,再求平均时候的差别
+job.setCombinerClass(WordcountCombiner.class);
+
+
+rpm -qa|grep -i maysql  查看安装文件
+
+https://docs.hortonworks.com/HDPDocuments/Ambari-2.4.2.0/bk_ambari-installation/content/ambari_repositories.html
+
+sql
+索引 ,排好序的快速查找数据结构, 主要是btree
+以文件的形式放在硬盘上
+
+lsof -i  6379  看网络端口
+
+
+
+
+
+
+
+
+
+
+
